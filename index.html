@@ -15,7 +15,6 @@
     .hero{display:grid;grid-template-columns:1fr 420px;gap:24px;align-items:center}
     .hero h1{margin:0;font-size:36px;line-height:1.02}
     .hero p{color:var(--muted);margin-top:10px}
-    .cta{margin-top:18px;padding:10px 14px;background:var(--accent);color:#061012;border-radius:8px;font-weight:600;border:none;cursor:pointer}
     .preview-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:10px;padding:12px;display:flex;align-items:center;justify-content:center}
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
     .proj{background:var(--card);border-radius:10px;overflow:hidden;position:relative;cursor:pointer}
@@ -35,9 +34,7 @@
   <header>
     <div class="logo">Acid's VFX</div>
     <nav>
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+      <!-- Navigation removed as requested -->
     </nav>
   </header>
 
@@ -46,9 +43,6 @@
       <div>
         <h1>Roblox VFX artist focused on compact, game-friendly auras and particle systems</h1>
         <p>I create optimized aura systems, seamless audio loops, and performance-minded effects for Roblox games.</p>
-        <div>
-          <button class="cta" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">View Work</button>
-        </div>
       </div>
 
       <!-- Hero preview (using video at repo root: haki_aura1.mp4) -->
@@ -107,8 +101,7 @@
     </div>
   </div>
 
-  <footer id="contact">
-    <div>Interested in collaborating? <a href="mailto:youremail@example.com" style="color:var(--accent);text-decoration:none">Email me</a></div>
+  <footer>
     <div style="margin-top:8px;color:var(--muted)">© 2025 Acid — Roblox VFX</div>
   </footer>
 
@@ -122,7 +115,6 @@
       const title = el.dataset.title;
       const desc = el.dataset.desc;
       const tools = el.dataset.tools;
-      // prefer <source> attribute if present
       const sourceEl = el.querySelector('video source');
       const videoSrc = sourceEl ? sourceEl.getAttribute('src') : null;
 
@@ -146,34 +138,28 @@
       }
 
       modal.setAttribute('aria-hidden', 'false');
-      // focus modal card for accessibility
       modalCard.focus();
       document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
-      // stop and remove media
       const v = mediaContainer.querySelector('video');
       if (v) {
         try { v.pause(); v.removeAttribute('src'); v.load(); } catch(e){}
       }
       mediaContainer.innerHTML = '';
-
       modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
     }
 
-    // close when clicking the overlay (but not when clicking inside the card)
     modal.addEventListener('click', (e) => {
       if (e.target === modal) closeModal();
     });
 
-    // prevent clicks inside the card from bubbling to overlay
     modalCard.addEventListener('click', (e) => {
       e.stopPropagation();
     });
 
-    // close on Escape
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
         closeModal();
